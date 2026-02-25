@@ -103,19 +103,24 @@ Non-technical communication errors may be safely ignored. Focus corrections on e
 
 ## Feature Implementation Template
 
-### Feature: Apps Component
+### Feature: Note app Card
 
 #### Objective
 <!-- Clear, concise statement of the feature's purpose, business value, and intended user outcomes -->
-Add blank page for our apps, also add sidebar item 'APPS' to access it. sidebar item is visible and
-clickable only when sidebar is not collapsed
+Add a card that will be entry point to our app. App name is Note. Every app we create will be represented
+with cards and user will access tha app by clicking a card. Create an object to represent card and use it 
+to create this and following cards. Cards will need three fields: type, title, subtitle.
+Note app: type:app, title:Note, subtitle:"Quick note taking app" (@agent: suggest better subtitle)
+Visual guide: card is a block with sides ratio 5w:3h, it is dark gray with :hover effect, it has a title in 
+large font size and blue text and smaller font subtitle in cyan.
 
 #### Acceptance Criteria
 <!-- Specific, measurable, and verifiable condition that must be satisfied for completion -->
 - Criterion 1: Code must compile without errors.
-- Criterion 2: APPS item visible on sidebar when it is not collapsed
-- Criterion 3: when sidebar collapses APPS item is not visible
-- Criterion 4: when APPS item is clicked, apps page (currently blank) is displayed
+- Criterion 2: APPS page displays note card
+- Criterion 3: card has a hover effect
+- Criterion 4: title and subtitle are displayed in correct colors
+
 
 #### Technical Specifications
 <!-- [Detailed technical requirements, implementation approach, architectural considerations, 
