@@ -41,8 +41,28 @@ Development efforts shall focus exclusively on features and requirements explici
 
 ### Logging
 - **Framework:** Logback
-- **Framework:** lombock
+- **Annotation-Based Logger:** Lombok `@Slf4j` annotation (preferred over explicit Logger instantiation)
+- **Logger Usage:** Always use `@Slf4j` annotation on classes requiring logging. This provides an implicit `log` field, eliminating manual `LoggerFactory.getLogger()` calls.
 - **Appenders:** Only console appender will be used.
+
+**Example - Correct Approach:**
+```java
+@Slf4j
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        log.info("Application started");
+    }
+}
+```
+
+**Example - Incorrect Approach (do not use):**
+```java
+public class Application {
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+    // Direct instantiation is verbose and redundant when @Slf4j is available
+}
+```
 ---
 
 ## Project Constraints
