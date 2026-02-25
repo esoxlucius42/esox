@@ -103,19 +103,24 @@ Non-technical communication errors may be safely ignored. Focus corrections on e
 
 ## Feature Implementation Template
 
-### Feature: Initiate project
+### Feature: Navigation sidebar
 
 #### Objective
 <!-- Clear, concise statement of the feature's purpose, business value, and intended user outcomes -->
-Create new Java project and add dependencies, asume JDK to be installed.
+Add Navigation sidebar to left border, it will be only way for user to navigate our app. Use orange
+color as primary for text. Start with label 'NAVIGATION' on top of sidebar. Note: we have an Header
+on top of the page, sidebar is placed bellow and to the left.
+Sidebar has to be collapsible. To the left of label 'NAVIGATION' add a red button to collapse / restore 
+sidebar. let button bew 24px wide and with 5px padding. when sidebar is collapsed make it wide enough to 
+display collapse button and nothing else.
 
 #### Acceptance Criteria
 <!-- Specific, measurable, and verifiable condition that must be satisfied for completion -->
 - Criterion 1: Code must compile without errors.
-- Criterion 2: React dependency must be defined in pom.xml
-- Criterion 3: Styled-componenets must be defined
-- Criterion 4: Add our first component - blank page 'Home' with Header displaying message 'under construction'
-- Criterion 5: Logger is up and runing
+- Criterion 2: sidebar must be bellow header
+- Criterion 3: red collapse button must be shown
+- Criterion 4: sidebar must be collapsible
+- Criterion 5: when sidebar is not collapsed, word 'NAVIGATION' is displayed next to button
 
 #### Technical Specifications
 <!-- [Detailed technical requirements, implementation approach, architectural considerations, 
@@ -132,7 +137,4 @@ See technical stack.
 <!-- Feature-specific limitations, performance requirements, data constraints, or operational restrictions -->
 None.
 
-#### Implementation Notes (Optional)
-<!-- Recommended approaches, technical considerations, design patterns, or guidance for implementation teams -->
-- Use test driven approach to develop requested feature.
 ---
