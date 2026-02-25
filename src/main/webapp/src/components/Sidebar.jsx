@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SidebarWrapper = styled.aside`
@@ -58,23 +59,40 @@ const NavItems = styled.nav`
   width: 100%;
 `;
 
-export default function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+const NavItem = styled.button`
+  background: none;
+  border: none;
+  color: #ff6b00;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
 
-  const toggleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
+  &:hover {
+    background-color: rgba(255, 107, 0, 0.1);
+  }
+`;
+
+export default function Sidebar({ isCollapsed, onToggleCollapse }) {
+  const navigate = useNavigate();
+
+  const handleNavClick = (path) => {
+    navigate(path);
   };
 
   return (
     <SidebarWrapper isCollapsed={isCollapsed}>
       <NavHeader>
-        <CollapseButton onClick={toggleCollapse}>
+        <CollapseButton onClick={onToggleCollapse}>
           {isCollapsed ? '→' : '←'}
         </CollapseButton>
         <NavLabel isCollapsed={isCollapsed}>NAVIGATION</NavLabel>
       </NavHeader>
       <NavItems isCollapsed={isCollapsed}>
-        {/* Navigation items will be added here */}
+        <NavItem onClick={() => handleNavClick('/apps')}>APPS</NavItem>
       </NavItems>
     </SidebarWrapper>
   );

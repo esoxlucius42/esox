@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import Apps from './Apps';
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -21,13 +22,22 @@ const MainContent = styled.main`
   background-color: #0a0a0a;
 `;
 
-export default function Home() {
+export default function Home({
+  sidebarCollapsed,
+  setSidebarCollapsed,
+  currentPage,
+}) {
   return (
     <LayoutContainer>
       <Header />
       <ContentWrapper>
-        <Sidebar />
-        <MainContent />
+        <Sidebar
+          isCollapsed={sidebarCollapsed}
+          onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+        />
+        <MainContent>
+          {currentPage === 'apps' && <Apps />}
+        </MainContent>
       </ContentWrapper>
     </LayoutContainer>
   );
