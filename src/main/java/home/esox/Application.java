@@ -2,15 +2,14 @@ package home.esox;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @SpringBootApplication
-public class Application {
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+public class Application {    
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        logger.info("Esox Application has started successfully");
+        log.info("Esox Application has started successfully");
     }
 }
