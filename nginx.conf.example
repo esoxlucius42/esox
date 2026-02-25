@@ -1,0 +1,49 @@
+upstream spring_boot {
+    server localhost:8081;
+}
+
+server {
+    listen 8080;
+    server_name localhost;
+    client_max_body_size 10M;
+
+    # Reverse proxy to Spring Boot application
+    location / {
+        proxy_pass http://spring_boot;
+        proxy_http_version 1.1;
+        
+        # Headers
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        
+        # Timeouts
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+        
+        # Buffering
+        proxy_buffering off;
+        proxy_request_buffering off;
+        
+        # Cache bypass
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # Static files caching (optional)
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        proxy_pass http://spring_boot;
+        proxy_cache_valid 200 1d;
+        expires 1d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Health check endpoint
+    location /health {
+        proxy_pass http://spring_boot;
+        access_log off;
+    }
+}
