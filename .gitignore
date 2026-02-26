@@ -54,3 +54,6 @@ tmp/
 # Environment files
 .env
 .env.local
+
+# H2 file-based database (development)
+data/
