@@ -3,11 +3,12 @@ import styled from 'styled-components';
 
 const CardWrapper = styled.div`
   aspect-ratio: 5 / 3;
-  background-color: #1a1a1a;
-  border-radius: 8px;
+  background-color: #0c1830;
+  border: 1px solid #1a3a6a;
+  border-radius: 10px;
   padding: 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,44 +16,25 @@ const CardWrapper = styled.div`
   position: relative;
   overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255, 107, 0, 0.1);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
   &:hover {
-    background-color: #2a2a2a;
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-
-    &::before {
-      opacity: 1;
-    }
+    background-color: #102040;
+    border-color: #2a6ab5;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(4, 20, 50, 0.5);
   }
 `;
 
 const CardTitle = styled.h3`
-  color: #0099ff;
-  font-size: 24px;
-  font-weight: bold;
+  color: #c8dff5;
+  font-size: 22px;
+  font-weight: 700;
   margin: 0 0 8px 0;
-  position: relative;
-  z-index: 1;
 `;
 
 const CardSubtitle = styled.p`
-  color: #00ffff;
-  font-size: 14px;
+  color: #6a9fc8;
+  font-size: 13px;
   margin: 0;
-  position: relative;
-  z-index: 1;
   line-height: 1.4;
 `;
 

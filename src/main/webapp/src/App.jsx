@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Home from './pages/Home';
@@ -10,32 +10,13 @@ const AppContainer = styled.div`
 `;
 
 export default function App() {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-
   return (
     <BrowserRouter>
       <AppContainer>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                sidebarCollapsed={sidebarCollapsed}
-                setSidebarCollapsed={setSidebarCollapsed}
-                currentPage="home"
-              />
-            }
-          />
-          <Route
-            path="/apps"
-            element={
-              <Home
-                sidebarCollapsed={sidebarCollapsed}
-                setSidebarCollapsed={setSidebarCollapsed}
-                currentPage="apps"
-              />
-            }
-          />
+          <Route path="/" element={<Home currentPage="apps" />} />
+          <Route path="/apps" element={<Home currentPage="apps" />} />
+          <Route path="/notes" element={<Home currentPage="notes" />} />
         </Routes>
       </AppContainer>
     </BrowserRouter>

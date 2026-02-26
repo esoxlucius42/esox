@@ -1,10 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Card from '../components/Card';
 
 const AppsContainer = styled.div`
-  padding: 20px;
-  background-color: #0a0a0a;
+  padding: 24px;
+  background-color: #050d1a;
   min-height: 100%;
 `;
 
@@ -22,9 +23,10 @@ const noteApp = {
 };
 
 export default function Apps() {
+  const navigate = useNavigate();
+
   const handleNoteCardClick = () => {
-    // Navigate to note app
-    console.log('Note app clicked');
+    navigate('/notes');
   };
 
   return (

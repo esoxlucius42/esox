@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
 import Apps from './Apps';
+import Notes from './Notes';
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -10,35 +10,22 @@ const LayoutContainer = styled.div`
   height: 100vh;
 `;
 
-const ContentWrapper = styled.div`
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-`;
-
 const MainContent = styled.main`
   flex: 1;
-  overflow-y: auto;
-  background-color: #0a0a0a;
+  overflow: hidden;
+  background-color: #050d1a;
+  display: flex;
+  flex-direction: column;
 `;
 
-export default function Home({
-  sidebarCollapsed,
-  setSidebarCollapsed,
-  currentPage,
-}) {
+export default function Home({ currentPage }) {
   return (
     <LayoutContainer>
       <Header />
-      <ContentWrapper>
-        <Sidebar
-          isCollapsed={sidebarCollapsed}
-          onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
-        />
-        <MainContent>
-          {currentPage === 'apps' && <Apps />}
-        </MainContent>
-      </ContentWrapper>
+      <MainContent>
+        {currentPage === 'apps' && <Apps />}
+        {currentPage === 'notes' && <Notes />}
+      </MainContent>
     </LayoutContainer>
   );
 }

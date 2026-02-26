@@ -103,38 +103,24 @@ Non-technical communication errors may be safely ignored. Focus corrections on e
 
 ## Feature Implementation Template
 
-### Feature: Note app Card
+### Feature: Note app implementation
 
 #### Objective
 <!-- Clear, concise statement of the feature's purpose, business value, and intended user outcomes -->
-Add a card that will be entry point to our app. App name is Note. Every app we create will be represented
-with cards and user will access tha app by clicking a card. Create an object to represent card and use it 
-to create this and following cards. Cards will need three fields: type, title, subtitle.
-Note app: type:app, title:Note, subtitle:"Quick note taking app" (@agent: suggest better subtitle)
-Visual guide: card is a block with sides ratio 5w:3h, it is dark gray with :hover effect, it has a title in 
-large font size and blue text and smaller font subtitle in cyan.
-
-#### Acceptance Criteria
-<!-- Specific, measurable, and verifiable condition that must be satisfied for completion -->
-- Criterion 1: Code must compile without errors.
-- Criterion 2: APPS page displays note card
-- Criterion 3: card has a hover effect
-- Criterion 4: title and subtitle are displayed in correct colors
-
-
-#### Technical Specifications
-<!-- [Detailed technical requirements, implementation approach, architectural considerations, 
-    and integration points with the established technical stack -->
-See technical stack.
-
-#### Dependencies
-<!-- Related features, existing components, services, or systems upon which this feature depends -->
-- **Internal Dependencies:** None
-<!-- Third-party libraries, services, APIs, or external prerequisites -->
-- **External Dependencies:** See technical stack.
-
-#### Constraints
-<!-- Feature-specific limitations, performance requirements, data constraints, or operational restrictions -->
-None.
+- create simple note editing app. 
+- It has its own page, don't use frames or overlays.
+- layout: left is reserved for a button '+ Add New Note' and a list of existing notes bellow it. 
+- keep it narrow
+- to the right there are two text areas:
+  - on top is a title area that is one-line only 
+  - rest of the layout belongs to content text area that is multi line area. 
+  - there are buttons to save(blue) and delete(red) a note.
+  - notes are stored in their own table in database. 
+- there will be only one database for all apps, each app will get one or more tables
+- prepend table names with short prefix that indicates app name, for this app it is 'note_'
+- keep track of last note open, and reopen it when user starts this app. 
+- ask for confirmation when:
+  - deleting note
+  - user tries to navigate away without saving changes
 
 ---
