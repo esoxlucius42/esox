@@ -4,7 +4,9 @@ import home.esox.entity.Note;
 import home.esox.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,7 +47,7 @@ public class NoteService {
                 })
                 .orElseThrow(() -> {
                     log.warn("Note not found with id: {}", id);
-                    return new RuntimeException("Note not found with id: " + id);
+                    return new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found with id: " + id);
                 });
     }
 
@@ -53,7 +55,7 @@ public class NoteService {
         log.info("Deleting note with id: {}", id);
         if (!noteRepository.existsById(id)) {
             log.warn("Attempted to delete non-existent note with id: {}", id);
-            throw new RuntimeException("Note not found with id: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found with id: " + id);
         }
         noteRepository.deleteById(id);
     }

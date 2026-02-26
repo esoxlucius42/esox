@@ -53,25 +53,15 @@ public class NoteController {
     @PutMapping("/{id}")
     public ResponseEntity<Note> updateNote(@PathVariable Long id, @RequestBody Note noteDetails) {
         log.info("PUT /api/notes/{} - Updating note", id);
-        try {
-            Note updatedNote = noteService.updateNote(id, noteDetails);
-            return ResponseEntity.ok(updatedNote);
-        } catch (RuntimeException e) {
-            log.warn("Failed to update note with id: {}", id);
-            return ResponseEntity.notFound().build();
-        }
+        Note updatedNote = noteService.updateNote(id, noteDetails);
+        return ResponseEntity.ok(updatedNote);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNote(@PathVariable Long id) {
         log.info("DELETE /api/notes/{} - Deleting note", id);
-        try {
-            noteService.deleteNote(id);
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            log.warn("Failed to delete note with id: {}", id);
-            return ResponseEntity.notFound().build();
-        }
+        noteService.deleteNote(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
