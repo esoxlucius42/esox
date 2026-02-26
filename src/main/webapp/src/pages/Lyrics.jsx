@@ -189,6 +189,13 @@ export default function Lyrics() {
     }
   };
 
+  const handleSearchImport = ({ artist, title, content }) => {
+    setArtist(artist);
+    setTitle(title);
+    setContent(content);
+    setUnsavedChanges(true);
+  };
+
   if (loading) {
     return <LyricsContainer><EmptyState>Loading lyrics...</EmptyState></LyricsContainer>;
   }
@@ -216,6 +223,7 @@ export default function Lyrics() {
             onSave={handleSaveLyrics}
             onDelete={handleDeleteLyrics}
             unsavedChanges={unsavedChanges}
+            onSearchImport={handleSearchImport}
           />
         ) : (
           <EmptyState>No lyrics yet. Add one to get started!</EmptyState>

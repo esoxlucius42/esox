@@ -23,11 +23,22 @@ const noteApp = {
   accentGradient: 'linear-gradient(90deg, #a03868 0%, #f072a8 50%, #a03868 100%)',
 };
 
+const lyricsApp = {
+  type: 'app',
+  title: 'Lyrics',
+  subtitle: 'You know that You got it wrong!',
+  accentGradient: 'linear-gradient(90deg, #1a6a8a 0%, #40c4e0 50%, #1a6a8a 100%)',
+};
+
 export default function Apps() {
   const navigate = useNavigate();
 
   const handleNoteCardClick = () => {
     navigate('/notes');
+  };
+
+  const handleLyricsCardClick = () => {
+    navigate('/lyrics');
   };
 
   return (
@@ -39,6 +50,13 @@ export default function Apps() {
           subtitle={noteApp.subtitle}
           accentGradient={noteApp.accentGradient}
           onClick={handleNoteCardClick}
+        />
+        <Card
+          type={lyricsApp.type}
+          title={lyricsApp.title}
+          subtitle={lyricsApp.subtitle}
+          accentGradient={lyricsApp.accentGradient}
+          onClick={handleLyricsCardClick}
         />
       </AppsGrid>
     </AppsContainer>

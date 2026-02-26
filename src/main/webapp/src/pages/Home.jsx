@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header from '../components/Header';
 import Apps from './Apps';
 import Notes from './Notes';
+import Lyrics from './Lyrics';
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -25,6 +26,7 @@ export default function Home({ currentPage }) {
       <MainContent>
         {currentPage === 'apps' && <Apps />}
         {currentPage === 'notes' && <Notes />}
+        {currentPage === 'lyrics' && <Lyrics />}
       </MainContent>
     </LayoutContainer>
   );

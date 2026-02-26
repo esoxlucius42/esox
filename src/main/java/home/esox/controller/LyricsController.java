@@ -1,6 +1,9 @@
 package home.esox.controller;
 
+import home.esox.entity.LyricsFetchResult;
 import home.esox.entity.Lyrics;
+import home.esox.entity.LyricsSearchResult;
+import home.esox.service.LyricsSearchService;
 import home.esox.service.LyricsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,6 +28,7 @@ import java.util.List;
 public class LyricsController {
 
     private final LyricsService lyricsService;
+    private final LyricsSearchService lyricsSearchService;
 
     @GetMapping
     public ResponseEntity<List<Lyrics>> getAllLyrics() {
@@ -62,6 +67,22 @@ public class LyricsController {
         log.info("DELETE /api/lyrics/{} - Deleting lyrics", id);
         lyricsService.deleteLyrics(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<LyricsSearchResult>> searchLyrics(@RequestParam String q) {
+        log.info("GET /api/lyrics/search?q={} - Searching lyrics", q);
+        return ResponseEntity.ok(lyricsSearchService.search(q));
+    }
+
+    @GetMapping("/search/fetch")
+    public ResponseEntity<LyricsFetchResult> fetchLyrics(
+            @RequestParam String artist,
+            @RequestParam String title) {
+        log.info("GET /api/lyrics/search/fetch - Fetching lyrics for {}/{}", artist, title);
+        return lyricsSearchService.fetchLyrics(artist, title)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }

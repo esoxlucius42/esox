@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import LyricsSearchOverlay from './LyricsSearchOverlay';
 
 const EditorWrapper = styled.div`
   display: flex;
@@ -11,12 +12,18 @@ const EditorWrapper = styled.div`
   overflow: hidden;
 `;
 
-const ArtistInput = styled.input`
+const ArtistRow = styled.div`
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #1a3a6a;
   flex-shrink: 0;
+`;
+
+const ArtistInput = styled.input`
+  flex: 1;
   padding: 16px;
   background-color: #0c1830;
   border: none;
-  border-bottom: 1px solid #1a3a6a;
   color: #e2eaf5;
   font-size: 22px;
   font-weight: 700;
@@ -24,11 +31,31 @@ const ArtistInput = styled.input`
   transition: border-color 0.2s ease;
 
   &:focus {
-    border-bottom-color: #4d9fec;
+    border-bottom: 2px solid #4d9fec;
+    margin-bottom: -2px;
   }
 
   &::placeholder {
     color: #2a5070;
+  }
+`;
+
+const SearchLyricsButton = styled.button`
+  flex-shrink: 0;
+  padding: 0 16px;
+  background: #0c1830;
+  color: #4d7a9e;
+  border: none;
+  border-left: 1px solid #1a3a6a;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #122540;
+    color: #4d9fec;
   }
 `;
 
@@ -144,15 +171,34 @@ export default function LyricsEditor({
   onSave,
   onDelete,
   unsavedChanges,
+  onSearchImport,
 }) {
+  const [showSearch, setShowSearch] = useState(false);
+
+  const handleAccept = (result) => {
+    setShowSearch(false);
+    onSearchImport(result);
+  };
+
   return (
     <EditorWrapper>
-      <ArtistInput
-        type="text"
-        placeholder="Artist"
-        value={artist}
-        onChange={onArtistChange}
-      />
+      {showSearch && (
+        <LyricsSearchOverlay
+          onAccept={handleAccept}
+          onCancel={() => setShowSearch(false)}
+        />
+      )}
+      <ArtistRow>
+        <ArtistInput
+          type="text"
+          placeholder="Artist"
+          value={artist}
+          onChange={onArtistChange}
+        />
+        <SearchLyricsButton onClick={() => setShowSearch(true)} title="Search for lyrics online">
+          Search
+        </SearchLyricsButton>
+      </ArtistRow>
       <TitleInput
         type="text"
         placeholder="Song Title"

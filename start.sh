@@ -4,14 +4,13 @@
 
 APP_DIR="/home/esox/dev/java/esox"
 JAR_FILE="$APP_DIR/target/esox-app-0.1.0.jar"
-LOG_DIR="/var/log/esox"
+LOG_DIR="${ESOX_LOG_DIR:-/tmp/esox-logs}"
 LOG_FILE="$LOG_DIR/esox-app.log"
-PID_FILE="/var/run/esox-app.pid"
+PID_FILE="${ESOX_PID_FILE:-/tmp/esox-app.pid}"
 PORT=8081
 
 # Create log directory if it doesn't exist
 mkdir -p "$LOG_DIR"
-chmod 755 "$LOG_DIR"
 
 # Check if JAR exists
 if [ ! -f "$JAR_FILE" ]; then

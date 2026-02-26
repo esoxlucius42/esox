@@ -17,6 +17,7 @@ export default function App() {
           <Route path="/" element={<Home currentPage="apps" />} />
           <Route path="/apps" element={<Home currentPage="apps" />} />
           <Route path="/notes" element={<Home currentPage="notes" />} />
+          <Route path="/lyrics" element={<Home currentPage="lyrics" />} />
         </Routes>
       </AppContainer>
     </BrowserRouter>
