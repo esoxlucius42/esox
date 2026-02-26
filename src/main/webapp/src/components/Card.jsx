@@ -7,6 +7,7 @@ const CardWrapper = styled.div`
   border: 1px solid #1a3a6a;
   border-radius: 10px;
   padding: 20px;
+  padding-top: 22px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -15,6 +16,17 @@ const CardWrapper = styled.div`
   align-items: flex-start;
   position: relative;
   overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: ${({ $accentGradient }) => $accentGradient || 'transparent'};
+    border-radius: 10px 10px 0 0;
+  }
 
   &:hover {
     background-color: #102040;
@@ -38,9 +50,9 @@ const CardSubtitle = styled.p`
   line-height: 1.4;
 `;
 
-export default function Card({ type, title, subtitle, onClick }) {
+export default function Card({ type, title, subtitle, accentGradient, onClick }) {
   return (
-    <CardWrapper onClick={onClick}>
+    <CardWrapper $accentGradient={accentGradient} onClick={onClick}>
       <CardTitle>{title}</CardTitle>
       <CardSubtitle>{subtitle}</CardSubtitle>
     </CardWrapper>

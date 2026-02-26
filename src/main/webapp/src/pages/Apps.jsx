@@ -20,6 +20,7 @@ const noteApp = {
   type: 'app',
   title: 'Note',
   subtitle: 'Capture ideas instantly',
+  accentGradient: 'linear-gradient(90deg, #a03868 0%, #f072a8 50%, #a03868 100%)',
 };
 
 export default function Apps() {
@@ -36,6 +37,7 @@ export default function Apps() {
           type={noteApp.type}
           title={noteApp.title}
           subtitle={noteApp.subtitle}
+          accentGradient={noteApp.accentGradient}
           onClick={handleNoteCardClick}
         />
       </AppsGrid>
