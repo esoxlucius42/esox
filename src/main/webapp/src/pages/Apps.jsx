@@ -30,6 +30,13 @@ const lyricsApp = {
   accentGradient: 'linear-gradient(90deg, #1a6a8a 0%, #40c4e0 50%, #1a6a8a 100%)',
 };
 
+const bazulovkaApp = {
+  type: 'app',
+  title: 'Bažulovka',
+  subtitle: 'Know your bažul',
+  accentGradient: 'linear-gradient(90deg, #1a6a3a 0%, #40e080 50%, #1a6a3a 100%)',
+};
+
 export default function Apps() {
   const navigate = useNavigate();
 
@@ -39,6 +46,10 @@ export default function Apps() {
 
   const handleLyricsCardClick = () => {
     navigate('/lyrics');
+  };
+
+  const handleBazulovkaCardClick = () => {
+    navigate('/bazulovka');
   };
 
   return (
@@ -57,6 +68,13 @@ export default function Apps() {
           subtitle={lyricsApp.subtitle}
           accentGradient={lyricsApp.accentGradient}
           onClick={handleLyricsCardClick}
+        />
+        <Card
+          type={bazulovkaApp.type}
+          title={bazulovkaApp.title}
+          subtitle={bazulovkaApp.subtitle}
+          accentGradient={bazulovkaApp.accentGradient}
+          onClick={handleBazulovkaCardClick}
         />
       </AppsGrid>
     </AppsContainer>

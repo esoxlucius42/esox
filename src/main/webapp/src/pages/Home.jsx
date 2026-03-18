@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Apps from './Apps';
 import Notes from './Notes';
 import Lyrics from './Lyrics';
+import Bazulovka from './Bazulovka';
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ export default function Home({ currentPage }) {
         {currentPage === 'apps' && <Apps />}
         {currentPage === 'notes' && <Notes />}
         {currentPage === 'lyrics' && <Lyrics />}
+        {currentPage === 'bazulovka' && <Bazulovka />}
       </MainContent>
     </LayoutContainer>
   );

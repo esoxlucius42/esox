@@ -19,6 +19,7 @@ public class ApplicationConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("forward:/index.html");
         registry.addViewController("/notes").setViewName("forward:/index.html");
         registry.addViewController("/apps").setViewName("forward:/index.html");
+        registry.addViewController("/bazulovka").setViewName("forward:/index.html");
     }
 
 }
