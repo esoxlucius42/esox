@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import ReviewEditor from '../components/ReviewEditor';
+import ReviewCard from '../components/ReviewCard';
 
 const BazulovkaContainer = styled.div`
   display: flex;
@@ -96,16 +98,120 @@ const ContentArea = styled.div`
   padding: 24px;
 `;
 
+const ReviewGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+`;
+
+const EmptyMessage = styled.div`
+  color: #3a5a7a;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 60px;
+`;
+
 export default function Bazulovka() {
   const [sortBy, setSortBy] = useState('date');
   const [sortDir, setSortDir] = useState('desc');
+  const [reviews, setReviews] = useState([]);
+  const [showEditor, setShowEditor] = useState(false);
+  const [editingReview, setEditingReview] = useState(null);
+
+  const [saveError, setSaveError] = useState(null);
 
   const toggleDir = () => setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
 
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+  async function fetchReviews() {
+    try {
+      const res = await fetch('/api/reviews');
+      if (res.ok) setReviews(await res.json());
+    } catch (e) {
+      console.error('Failed to fetch reviews', e);
+    }
+  }
+
+  function openNew() {
+    setEditingReview(null);
+    setShowEditor(true);
+  }
+
+  function openEdit(review) {
+    setEditingReview(review);
+    setShowEditor(true);
+  }
+
+  function closeEditor() {
+    setShowEditor(false);
+    setEditingReview(null);
+  }
+
+  async function handleSave(payload) {
+    setSaveError(null);
+    try {
+      const url = editingReview ? `/api/reviews/${editingReview.id}` : '/api/reviews';
+      const method = editingReview ? 'PUT' : 'POST';
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        await fetchReviews();
+        closeEditor();
+      } else {
+        const body = await res.text();
+        setSaveError(`Save failed (HTTP ${res.status}): ${body}`);
+        console.error('Save failed', res.status, body);
+      }
+    } catch (e) {
+      setSaveError(`Save failed: ${e.message}`);
+      console.error('Failed to save review', e);
+    }
+  }
+
+  async function handleDelete(id) {
+    try {
+      const res = await fetch(`/api/reviews/${id}`, { method: 'DELETE' });
+      if (res.ok) setReviews((prev) => prev.filter((r) => r.id !== id));
+    } catch (e) {
+      console.error('Failed to delete review', e);
+    }
+  }
+
+  const sorted = [...reviews].sort((a, b) => {
+    let av, bv;
+    if (sortBy === 'date') {
+      av = a.reviewDate ?? '';
+      bv = b.reviewDate ?? '';
+    } else if (sortBy === 'name') {
+      av = (a.title ?? '').toLowerCase();
+      bv = (b.title ?? '').toLowerCase();
+    } else {
+      av = a.totalScore ?? 0;
+      bv = b.totalScore ?? 0;
+    }
+    if (av < bv) return sortDir === 'asc' ? -1 : 1;
+    if (av > bv) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+
   return (
     <BazulovkaContainer>
+      {showEditor && (
+        <ReviewEditor
+          review={editingReview}
+          onSave={handleSave}
+          onCancel={closeEditor}
+          saveError={saveError}
+        />
+      )}
       <CommandBar>
-        <AddButton>Add new review</AddButton>
+        <AddButton onClick={openNew}>Add new review</AddButton>
         <SortControls>
           <SortLabel>Sort:</SortLabel>
           <SortSelect value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
@@ -116,7 +222,17 @@ export default function Bazulovka() {
           <DirButton onClick={toggleDir}>{sortDir === 'asc' ? 'ASC' : 'DESC'}</DirButton>
         </SortControls>
       </CommandBar>
-      <ContentArea />
+      <ContentArea>
+        {sorted.length === 0 ? (
+          <EmptyMessage>No reviews yet. Click "Add new review" to get started.</EmptyMessage>
+        ) : (
+          <ReviewGrid>
+            {sorted.map((r) => (
+              <ReviewCard key={r.id} review={r} onEdit={openEdit} onDelete={handleDelete} />
+            ))}
+          </ReviewGrid>
+        )}
+      </ContentArea>
     </BazulovkaContainer>
   );
 }
